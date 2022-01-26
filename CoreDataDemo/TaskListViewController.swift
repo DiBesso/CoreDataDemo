@@ -6,10 +6,11 @@
 //
 
 import UIKit
-import CoreData
 
 class TaskListViewController: UITableViewController {
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    var storageManager = StorageManager ()
+    private let context = (UIApplication.shared.delegate as! AppDelegate).storageManager.persistentContainer.viewContext
     
     private let cellID = "task"
     private var taskList: [Task] = []
@@ -71,6 +72,8 @@ class TaskListViewController: UITableViewController {
         }
     }
     
+    // MARK: - Alert
+    
     private func showAlert(with title: String, and message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
@@ -87,6 +90,45 @@ class TaskListViewController: UITableViewController {
         }
         present(alert, animated: true)
     }
+    
+    private func showAlertForSetup(with title: String, and message: String){
+        
+       let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+       let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+           guard let task = alert.textFields?.first?.text, !task.isEmpty else { return }
+           self.saveSetup(task)
+
+       }
+       
+       let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+       
+       alert.addAction(saveAction)
+       alert.addAction(cancelAction)
+       alert.addTextField { textField in
+           textField.placeholder = "New Task"
+       }
+       present(alert, animated: true)
+   }
+    
+    // MARK: - Saving Methods
+    
+    private func saveSetup(_ taskName:String) {
+        let task = Task(context: context)
+        task.name = taskName
+        taskList.append(task)
+        
+        // Вот в этом месте не понимаю, как обратиться к той же самой ячейке, которую я хочу отредактировать
+        
+//        let cellIndex = IndexPath(row: taskList.count, section: 0)
+//        tableView.cellForRow(at: cellIndex)
+        
+        do {
+            try context.save()
+        } catch let error {
+            print(error)
+        }
+    }
+    
     private func save(_ taskName: String) {
         
         let task = Task(context: context)
@@ -104,6 +146,8 @@ class TaskListViewController: UITableViewController {
     }
 }
 
+// MARK: - Extension
+
 extension TaskListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         taskList.count
@@ -116,6 +160,34 @@ extension TaskListViewController {
         var content = cell.defaultContentConfiguration()
         content.text = task.name
         cell.contentConfiguration = content
+        
         return cell
+    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+
+            // тут не могу правильно прописать удаление из coreData
+            
+            taskList.remove(at: indexPath.row)
+        }
+        do {
+            try context.save()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let setup = setupAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [setup])
+    }
+    
+    func setupAction (at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .normal, title: "Setup") { _,_,_ in
+            self.showAlertForSetup(with: "Save", and: "")
+            
+        }
+        return action
     }
 }
