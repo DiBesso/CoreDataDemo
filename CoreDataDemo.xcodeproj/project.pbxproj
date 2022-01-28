@@ -13,6 +13,7 @@
 		06765C84279F14050082C560 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06765C83279F14050082C560 /* Assets.xcassets */; };
 		06765C87279F14050082C560 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06765C85279F14050082C560 /* LaunchScreen.storyboard */; };
 		A4F8DB6227A18E59007BBC03 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8DB6127A18E59007BBC03 /* StorageManager.swift */; };
+		A4F8DB6427A40E0F007BBC03 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8DB6327A40E0F007BBC03 /* AlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		06765C86279F14050082C560 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		06765C88279F14050082C560 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4F8DB6127A18E59007BBC03 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		A4F8DB6327A40E0F007BBC03 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				06765C77279F14040082C560 /* AppDelegate.swift */,
 				06765C7B279F14040082C560 /* TaskListViewController.swift */,
 				A4F8DB6127A18E59007BBC03 /* StorageManager.swift */,
+				A4F8DB6327A40E0F007BBC03 /* AlertController.swift */,
 				06765C83279F14050082C560 /* Assets.xcassets */,
 				06765C85279F14050082C560 /* LaunchScreen.storyboard */,
 				06765C88279F14050082C560 /* Info.plist */,
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06765C7C279F14040082C560 /* TaskListViewController.swift in Sources */,
+				A4F8DB6427A40E0F007BBC03 /* AlertController.swift in Sources */,
 				06765C82279F14040082C560 /* CoreDataDemo.xcdatamodeld in Sources */,
 				06765C78279F14040082C560 /* AppDelegate.swift in Sources */,
 				A4F8DB6227A18E59007BBC03 /* StorageManager.swift in Sources */,
